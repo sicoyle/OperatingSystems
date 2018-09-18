@@ -1,60 +1,39 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <string.h>
 
-int main (int argc, char **argv){
+typedef struct state{
+	char name[2];
+	int pop;
+} state;
 
-	//Variables
-	int i, j;
-	//10 for number of states entered, and 8 for state abbreviation plus space plus 5 spots for population
-	char List[10][8];
-	char abbreviation[10][2];
-	char population[10][5];
-	char trash;
-		printf("Enter in a list of US states and their populations. Enter in the form: "
-				"TX 26 "
-				"NC 9 "
-				"MD 5 "
-				"NY 19 "
-				"Ctrl-D (to terminate the program. \n");
-	
-//	while(scanf("%2s, %[ ], %s", List[i], population[i]) != EOF){
-	//Read in input
-//		i++;
-//	}
+int main(){
+	state populations[10];
+	int count = 0;
+	char temp[2];
+	int p;
 
-/*	//Reads in list right, but not population
-	while(scanf("%2s, %c", &List[i][j], &population[i][j]) != EOF){
-		printf("List: %s \n", &List[i][j]);
-		printf("pop: %c \n", population[i][j]);
-		
-		
-		i++, j++;
+	printf("Hello\n");
+
+
+	//need to add in while !EOF
+	while((count < 3)){
+		printf("Enter abbreviation: ");
+		scanf("%2s", &*temp);
+		printf("Enter population: ");
+		scanf("%d", &p);
+
+		strcpy(populations[count].name, temp);
+		populations[count].pop = p;
+
+		//printf("Contents of p: %d ", p);
+
+		count++;
 	}
-*/
 
-	
-
-
-
-/*	while(scanf("%s", str){
-			abbreviation[i] = strtok(str, delim);
-			
-			population[i] = strtok(NULL, delim);
-			}
-
-*/
-	
-
-
-
-//	for(i = 0; i < 10; i++){
-//		//printf("%s, %s", List[i], population[i]);	
-//		printf("State abbreviation: %s \n", List[i]);
-//	       	printf("Population: %s \n", population[i]);
-//	}	
-
-
-
+	for(int i = 0; i < 3; i++){
+		if(populations[i].pop >= 10)
+			printf("States: %s", populations[i].name);
+	}
 
 	return(0);
-}
+}	
