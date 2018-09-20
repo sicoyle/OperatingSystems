@@ -12,27 +12,22 @@ int main(){
 	char temp[2];
 	int p;
 
-	printf("Hello\n");
-
-
 	//need to add in while !EOF
-	while((count < 3)){
-		printf("Enter abbreviation: ");
-		scanf("%2s", &*temp);
-		printf("Enter population: ");
+	while((count < 10) && (scanf("%2s", &*temp) != EOF)){
 		scanf("%d", &p);
 
 		strcpy(populations[count].name, temp);
 		populations[count].pop = p;
 
-		//printf("Contents of p: %d ", p);
-
 		count++;
+
 	}
 
-	for(int i = 0; i < 3; i++){
+	printf("\n\n");
+
+	for(int i = 0; i < count; i++){
 		if(populations[i].pop >= 10)
-			printf("States: %s", populations[i].name);
+			printf("%s\n", populations[i].name);
 	}
 
 	return(0);
