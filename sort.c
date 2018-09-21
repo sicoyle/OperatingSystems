@@ -35,41 +35,20 @@ int main(int argc, char **argv){
 	if(argc > 11){
 		printf("%s", "Too many states entered");
 		exit(1);
-	}
-	else{
-		
+	} else{	
 		struct st_ex structs[argc - 1]; 
-
-/*		for(int i = 1; i < (argc); i++)
-			for(int j = 0; j < 2; j++)
-				strcpy(&*structs[i].name, &argv[i][j]);
-*/
 
 		for(int i = 1; i < argc; i++){
 			strcpy(structs[i].name, argv[i]);
 		}
 
-		
-
-		for(int i = 1; i < argc; i++)
-			printf("%s\n", &*structs[i].name);
-		
-
-
-		
 		size_t structs_len = sizeof(structs) / sizeof(struct st_ex) + 1;
-
-		printf("%s%ld\n", "length: ", structs_len);
 
 		qsort(structs, structs_len, sizeof(struct st_ex), struct_cmp_by_state);
 		
-		printf("\n%s\n\n", "Results from sort");
-
 		for(int i = 1; i < argc; i++)
 			printf("%s\n", &*structs[i].name);
 		
-//		print_struct_array(structs, structs_len);
-
 	}
 
 	return 0;
