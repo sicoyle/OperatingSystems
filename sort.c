@@ -5,7 +5,7 @@
 
 struct st_ex{
 	char name[3];
-	int pop;
+//	int pop;
 };
 
 int struct_cmp_by_state(const void *a, const void *b){
@@ -15,7 +15,7 @@ int struct_cmp_by_state(const void *a, const void *b){
 
 	return strcmp(ia -> name, ib -> name);
 }
-
+/*
 void print_struct_array(struct st_ex *array, size_t len){
 	size_t i;
 
@@ -24,7 +24,7 @@ void print_struct_array(struct st_ex *array, size_t len){
 
 	printf("\n");
 }
-
+*/
 	
 
 
@@ -51,22 +51,23 @@ int main(int argc, char **argv){
 
 		
 
-		//struct st_ex structs[] = {{"TX", 10}, {"CA", 8}, {"SC", 1}, {"SD", 90}};
-/* This is not printing properly
-		size_t structs_len = sizeof(structs) / sizeof(struct st_ex);
+		for(int i = 1; i < argc; i++)
+			printf("%s\n", &*structs[i].name);
+		
+
 
 		
-		print_struct_array(structs, structs_len);
+		size_t structs_len = sizeof(structs) / sizeof(struct st_ex);
 
+		printf("%s%ld\n", "length: ", structs_len);
 
-		printf("%s\n", "try");
-*/
+		qsort(structs, structs_len, sizeof(struct st_ex), struct_cmp_by_state);
+		
+		printf("\n%s\n\n", "Results from sort");
 
-		for(int i = 0; i < argc; i++)
+		for(int i = 1; i < argc; i++)
 			printf("%s\n", &*structs[i].name);
-
-//		qsort(structs, structs_len, sizeof(struct st_ex), struct_cmp_by_state);
-
+		
 //		print_struct_array(structs, structs_len);
 
 	}
