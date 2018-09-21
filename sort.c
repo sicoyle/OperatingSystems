@@ -57,7 +57,7 @@ int main(int argc, char **argv){
 
 
 		
-		size_t structs_len = sizeof(structs) / sizeof(struct st_ex);
+		size_t structs_len = sizeof(structs) / sizeof(struct st_ex) + 1;
 
 		printf("%s%ld\n", "length: ", structs_len);
 
