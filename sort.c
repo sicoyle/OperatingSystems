@@ -25,16 +25,51 @@ void print_struct_array(struct st_ex *array, size_t len){
 	printf("\n");
 }
 
-int main(){
-	struct st_ex structs[] = {{"TX", 10}, {"CA", 8}, {"SC", 1}, {"SD", 90}};
+	
 
-	size_t structs_len = sizeof(structs) / sizeof(struct st_ex);
 
-	print_struct_array(structs, structs_len);
 
-	qsort(structs, structs_len, sizeof(struct st_ex), struct_cmp_by_state);
+int main(int argc, char **argv){
 
-	print_struct_array(structs, structs_len);
+	//no more than 10 states
+	if(argc > 11){
+		printf("%s", "Too many states entered");
+		exit(1);
+	}
+	else{
+		
+		struct st_ex structs[argc - 1]; 
+
+/*		for(int i = 1; i < (argc); i++)
+			for(int j = 0; j < 2; j++)
+				strcpy(&*structs[i].name, &argv[i][j]);
+*/
+
+		for(int i = 1; i < argc; i++){
+			strcpy(structs[i].name, argv[i]);
+		}
+
+		
+
+		//struct st_ex structs[] = {{"TX", 10}, {"CA", 8}, {"SC", 1}, {"SD", 90}};
+/* This is not printing properly
+		size_t structs_len = sizeof(structs) / sizeof(struct st_ex);
+
+		
+		print_struct_array(structs, structs_len);
+
+
+		printf("%s\n", "try");
+*/
+
+		for(int i = 0; i < argc; i++)
+			printf("%s\n", &*structs[i].name);
+
+//		qsort(structs, structs_len, sizeof(struct st_ex), struct_cmp_by_state);
+
+//		print_struct_array(structs, structs_len);
+
+	}
 
 	return 0;
 }
