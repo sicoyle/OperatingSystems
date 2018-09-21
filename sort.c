@@ -33,7 +33,7 @@ int main(int argc, char **argv){
 
 	//no more than 10 states
 	if(argc > 11){
-		printf("%s", "Too many states entered");
+		printf("%s\n", "Too many states entered");
 		exit(1);
 	} else{	
 		struct st_ex structs[argc - 1]; 
