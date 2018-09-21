@@ -1,52 +1,40 @@
-#include <stdio.h>
 #include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
 
-int cstring_cmp(const void *a, const void *b){
 
-	const char **ia = (const char **)a;
-	const char **ib = (const char **)b;
-	return strcmp(*ia, *ib);
+struct st_ex{
+	char name[3];
+	int pop;
+};
+
+int struct_cmp_by_state(const void *a, const void *b){
+
+	struct st_ex *ia = (struct st_ex *)a;
+	struct st_ex *ib = (struct st_ex *)b;
+
+	return strcmp(ia -> name, ib -> name);
+}
+
+void print_struct_array(struct st_ex *array, size_t len){
+	size_t i;
+
+	for(i = 0; i < len; i++)
+		printf("%s\n", array[i].name);
+
+	printf("\n");
 }
 
 int main(){
-	//3 bc state abbrev + null terminator
-	char states[10][2];
-	int i, j;
-	i = j = 0;
-	char temp[10][2];
+	struct st_ex structs[] = {{"TX", 10}, {"CA", 8}, {"SC", 1}, {"SD", 90}};
 
-	while(scanf("%s", &states[i][j]) != EOF){
-		i++, j++;
-	}
+	size_t structs_len = sizeof(structs) / sizeof(struct st_ex);
 
-	int count = i;
-	size_t strings_len = sizeof(states) / sizeof(char *);
+	print_struct_array(structs, structs_len);
 
-/*	for(i = 0; i < 10; i++){
-		for(j = 0; j < 2; j++){
-			//sort functionality
-			if(strcmp(&states[i][j], &states[i+1][j]) > 0){
-				strcpy(&temp[i][j], &states[i][j]);
-				printf("\n%s", &temp[i][j]);
-				strcpy(&states[i][j], &states[i+1][j]);
-				printf("\n%s%s", &states[i][j], &states[i+1][j]);
-				strcpy(&states[i+1][j], &temp[i][j]);
-			}
-		}
+	qsort(structs, structs_len, sizeof(struct st_ex), struct_cmp_by_state);
 
-		
-
-	}
-*/
-	qsort(states, strings_len, sizeof(char *), cstring_cmp);
-
-
-
-	for(i = 0; i < count; i++)
-		for(j = 0; j < 3; j++)
-		printf("\n%s", &states[i][j]);
+	print_struct_array(structs, structs_len);
 
 	return 0;
-
-	}
+}
