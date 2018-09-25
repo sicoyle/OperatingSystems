@@ -9,16 +9,19 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <signal.h>
+#include <sys/wait.h>
 
 int main(){
 	//variables to establish pipe
 	int p[2];
 	int bytes;
 
-	//fork first so child can inherit pipe
-	pid_t pid = fork();
-
 	pipe(p);
+	//fork first so child can inherit pipe
+	pid_t pid;
+       
+	pid = fork();
+
 
 	//error state
 	if(pid < 0){
@@ -26,28 +29,30 @@ int main(){
 		exit(1);
 	} else if(pid == 0){
 		//child
-		close(1);
-		dup(p[1]);
-		close(p[1]);
 		close(p[0]);
+		dup(p[1]);
+		close(1);
+		close(p[1]);
 		
 		//execute program
 		execl("./pre", "pre", (char *) 0);
 		//return(EXIT_FAILURE);
 		
 
-		kill(pid, SIGTERM);
 	} else{
 		//parent
-		wait((int *)0);
-		close(0);
-		open(1);//added
+		close(p[1]);
 		dup(p[0]);
 		close(p[0]);
-		close(p[1]);
+	//	wait((int *)0);
+		close(0);
+
+		char inBuff[512];
+		close(p[0]);
+
 		//execute program
 		execl("./sort", "sort", (char *) 0);
-		//return(EXIT_FAILURE);
+		return(EXIT_FAILURE);
 	}
 	
 
