@@ -23,6 +23,7 @@ int struct_cmp_by_state(const void *a, const void *b){
 	return strcmp(ia -> name, ib -> name);
 }
 
+
 int main(){
 	//Variables
 	int i = 0;	
@@ -37,13 +38,13 @@ int main(){
 	//sort
 	qsort(stateAbbreviations, SIZE, sizeof(struct st_ex), struct_cmp_by_state);
 
-	printf("\n");
-	
 	//print sorted list		
 	while(SIZE > i){
 		printf("%s\n", stateAbbreviations[i].name);
 		i++;
 	}
 
-	return 0;
+	printf("\n");
+
+	return(0);
 }
