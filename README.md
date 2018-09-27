@@ -26,4 +26,19 @@ To execute:
 
 gcc -o sort sort.c
 
+homework1problem2.c executes pre.c and writes the output of that into sort.c to sort it.
 
+To execute:
+
+./pre | ./sort
+
+homework1problem3.c has a child-To-parent pipe. The process ids are printed out and the program will use argv and
+argc to execute the user inputed command.
+
+To execute:
+
+gcc homework1problem3.c
+
+./a.out "ls -t -l"
+
+What is in quotes can be changed to execute different commands. 

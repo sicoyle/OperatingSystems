@@ -23,18 +23,22 @@ int main(int argc, char **argv){
 		exit(1);
 	} else if(pid == 0){
 		//Child
-		printf("Child process started.\n");
+		//printf("\nChild process has started.\n");
 		printf("Executing %s command.\n", argv[1]);
-		printf("Output of command passed is:\n");
+		printf("Command results:\n");
+
+		//have system execute command
 		system(argv[1]);
+		printf("Child process is complete.\n");
 	} else{
 		//parent process
-		printf("Parent process started.\n");
-		wait( (int *)0);
+		//printf("Parent process has started.\n");
+		
 		wait(&status);//wait for child to exit and store child's exit status
-		printf("\nParent process finished.\n");
-		printf("The child's pid is %d and the parent's pid is %d.\n", getpid(), getppid());
-
+		
+		//print ids of processes
+		printf("\nParent process has finished.\n");
+		printf("Child process id is: %d and parent process id is: %d.\n", getpid(), getppid());
 	}
 
 
