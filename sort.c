@@ -10,7 +10,7 @@
 #define SIZE 10
 
 struct st_ex{
-	char name[10];
+	char name[3];
 //	int pop;
 };
 
@@ -29,18 +29,21 @@ int main(){
 	struct st_ex stateAbbreviations[SIZE]; 
 
 	//struct size	
-	memset(&stateAbbreviations, 0 , sizeof(stateAbbreviations));
+	memset(&stateAbbreviations, 0 , sizeof(stateAbbreviations) + 1);
 
 	//read in the states
 	while((SIZE > i++) && (scanf("%s", stateAbbreviations[i].name) != EOF)){}
-		
+	
+	//get actual size of struct to fix bug of skipping sorting last state
+	size_t actual = sizeof(stateAbbreviations) / sizeof(struct st_ex) + 1;
+
 	//sort
-	qsort(stateAbbreviations, SIZE, sizeof(struct st_ex), struct_cmp_by_state);
+	qsort(stateAbbreviations, actual, sizeof(struct st_ex), struct_cmp_by_state);
 
 	i = 0;
 
 	//print sorted list		
-	while(i < SIZE){
+	while(i < SIZE + 1){
 		printf("%s\n", stateAbbreviations[i].name);
 		i++;
 	}
