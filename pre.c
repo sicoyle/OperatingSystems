@@ -34,10 +34,10 @@ int main(){
 		count++;
 	}
 
-	printf("\n\n");
+	int i = 0;
 
 	//Loop through and print state abbreviation if populatin >= 10
-	for(int i = 0; i < count; i++){
+	for(i; i < count; i++){
 		if(populations[i].pop >= 10)
 			printf("%s\n", populations[i].name);
 	}
