@@ -14,7 +14,6 @@
 int main(){
 	//variables to establish pipe
 	int p[2];
-	int bytes;
 
 	pipe(p);
 	//fork first so child can inherit pipe
@@ -22,43 +21,31 @@ int main(){
        
 	pid = fork();
 
-
 	//error state
 	if(pid < 0){
 		printf("There was an issue forking.\n");
-		exit(1);
+		exit(2);
 	} else if(pid == 0){
-		//child
+		//proper order to work with file descriptor
+		//Read in
 		close(p[0]);
-		dup(p[1]);
-		close(1);
+		dup2(p[1],1);
 		close(p[1]);
-		
-		//execute program
-		execl("./pre", "pre", (char *) 0);
-		//return(EXIT_FAILURE);
-		
 
+		//execute program to get input
+		execv("pre", NULL);
+		_exit(1);
 	} else{
-		//parent
+		//proper order to work with file descriptor
+		//write
 		close(p[1]);
-		dup(p[0]);
-		close(p[0]);
-	//	wait((int *)0);
-		close(0);
-
-		char inBuff[512];
+		dup2(p[0], 0);
 		close(p[0]);
 
-		//execute program
-		execl("./sort", "sort", (char *) 0);
-		return(EXIT_FAILURE);
+		//execute program to sort
+		execv("sort", NULL);
+		perror("\nexecl() sort failed\n");
 	}
 	
-
-
-
-
-
 	return 0;
 }
