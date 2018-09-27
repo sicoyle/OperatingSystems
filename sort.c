@@ -23,7 +23,6 @@ int struct_cmp_by_state(const void *a, const void *b){
 	return strcmp(ia -> name, ib -> name);
 }
 
-
 int main(){
 	//Variables
 	int i = 0;	
