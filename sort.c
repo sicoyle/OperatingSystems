@@ -38,10 +38,9 @@ int main(int argc, char **argv){
 
 		//Sort struct state abbreviations
 		qsort(structs, structs_len, sizeof(struct st_ex), struct_cmp_by_state);
-		
 		//Print out sorted list
 		for(int i = 1; i < argc; i++)
-			printf("%s\n", &*structs[i].name);
+			printf("\n%s\n", &*structs[i].name);
 	}
 
 	return 0;
