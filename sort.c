@@ -37,8 +37,10 @@ int main(){
 	//sort
 	qsort(stateAbbreviations, SIZE, sizeof(struct st_ex), struct_cmp_by_state);
 
+	i = 0;
+
 	//print sorted list		
-	while(SIZE > i){
+	while(i < SIZE){
 		printf("%s\n", stateAbbreviations[i].name);
 		i++;
 	}
