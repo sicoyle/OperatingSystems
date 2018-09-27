@@ -7,8 +7,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define SIZE 10
+
 struct st_ex{
-	char name[3];
+	char name[10];
 //	int pop;
 };
 
@@ -21,26 +23,26 @@ int struct_cmp_by_state(const void *a, const void *b){
 	return strcmp(ia -> name, ib -> name);
 }
 
-int main(int argc, char **argv){
-	//no more than 10 states
-	if(argc > 11){
-		printf("%s\n", "Too many states entered");
-		exit(1);
-	} else{	
-		struct st_ex structs[argc - 1]; 
+int main(){
+	//Variables
+	int i = 0;	
+	struct st_ex stateAbbreviations[SIZE]; 
 
-		//Copy over state abbreviations to the struct state name variable
-		for(int i = 1; i < argc; i++){
-			strcpy(structs[i].name, argv[i]);
-		}
+	//struct size	
+	memset(&stateAbbreviations, 0 , sizeof(stateAbbreviations));
 
-		size_t structs_len = sizeof(structs) / sizeof(struct st_ex) + 1;
+	//read in the states
+	while((SIZE > i++) && (scanf("%s", stateAbbreviations[i].name) != EOF)){}
+		
+	//sort
+	qsort(stateAbbreviations, SIZE, sizeof(struct st_ex), struct_cmp_by_state);
 
-		//Sort struct state abbreviations
-		qsort(structs, structs_len, sizeof(struct st_ex), struct_cmp_by_state);
-		//Print out sorted list
-		for(int i = 1; i < argc; i++)
-			printf("\n%s\n", &*structs[i].name);
+	printf("\n");
+	
+	//print sorted list		
+	while(SIZE > i){
+		printf("%s\n", stateAbbreviations[i].name);
+		i++;
 	}
 
 	return 0;
