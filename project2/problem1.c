@@ -20,6 +20,7 @@ int main()
 
 	char *inputPath;
 	char *outputPath;
+	int arguments[20] = {0};
 
 	while(1) {
 		inword = 0;
@@ -66,7 +67,6 @@ int main()
 		//End of command parsing
 
 		int count = 0;
-		int arguments[18] = {0};
 		int pipes = 0;
 		int pid = 0;
 		int inFlag = 0;
@@ -99,7 +99,7 @@ int main()
 		}
 
 		for(int index = 0; index <= pipes; index++) {
-			if( (index != pipes) && (pipes > 0)) 
+			if( pipes > 0 && (index != pipes)) 
 				pipe(rightPipe);
 
 
@@ -123,7 +123,7 @@ int main()
 					}
 
 					if ((index == pipes) && (outFlag == 1)) {
-						int outFile = open(path, O_WRONLY | O_CREAT, 0755);
+						int outFile = open(outputPath, O_WRONLY | O_CREAT, 0755);
 						if(outFile < 0) {
 							perror("The ooutput file has failed!\n");
 							return(EXIT_FAILURE);
