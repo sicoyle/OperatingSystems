@@ -1,48 +1,51 @@
 #include <pthread.h>
 #include <stdio.h>
+#include <math.h>
+#include <unistd.h>
 
 struct Award {
-	float totalAwardAmount;
-	float temp;
+	int currentAwardAmount;
+	int givenOut;
 };
 
 //Functions
-void *takeAwardFirst();
-void *takeAwardSecond();
-void *takeAwardThird();
+void student(char c);
 
 //Variables to be used
-pthread_mutex_t mutex;
 struct Award award;
 
 int main() {
 	//Initial values
-	award.totalAwardAmount = 4000.0;
-	award.temp = 0.0;
+	award.currentAwardAmount = 4000;
+	award.givenOut = 0;
 
-	//Thread ids and attributes
-	pthread_t tid1, tid2, tid3;
-	pthread_attr_t attribute;
-
-	printf("First person takes away $ %d \n", award.totalAwardAmount);
-	printf("First person takes away $ %d \n", award.temp);
+	pthread_t a,b,c;
 
 	//Create threads
-	pthread_create(&tid1, NULL, (void *(*)(void*))takeAwardFirst, NULL);
-	pthread_create(&tid2, NULL, (void *(*)(void*))takeAwardSecond, NULL);
-	pthread_create(&tid3, NULL, (void *(*)(void*))takeAwardThird, NULL);
+	pthread_create(&a, NULL, (void *(*)(void*))student, (void*)'A');
+	pthread_create(&b, NULL, (void *(*)(void*))student, (void*)'B');
+	pthread_create(&c, NULL, (void *(*)(void*))student,(void*)'C');
+
+	pthread_join(a, NULL);
+	pthread_join(b, NULL);
+	pthread_join(c, NULL);
+
+	printf("Total award money given out: $ %d \n", award.givenOut);
 
 	pthread_exit(0);
 }
 
-void *takeAwardFirst() {
+void student(char c) {
+	int total = 0;
+	int temp;
 
-}
-
-void *takeAwardSecond() {
-
-}
-
-void *takeAwardThird() {
-
+	while(0 < award.currentAwardAmount) { 
+		temp = ceil(award.currentAwardAmount * 0.25);
+		award.currentAwardAmount -= temp;
+		total += temp;
+		printf("%c = %d \n", c, temp);
+		sleep(1);
+	}
+	
+	award.givenOut += total;
 }
