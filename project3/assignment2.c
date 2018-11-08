@@ -42,7 +42,7 @@ int main() {
 	pthread_join(b, NULL);
 	pthread_join(c, NULL);
 
-	printf("Total award money given out: $ %d \n", award.givenOut);
+	printf("Total amount awarded: $ %d \n\n", award.givenOut);
 
 	pthread_exit(0);
 }
@@ -64,7 +64,7 @@ void student(char c) {
 		printf("%c = %d \n", c, temp);
 
 		//Sleep threads
-		sleep(2);
+		sleep(1);
 		
 		//Unlock
 		pthread_mutex_unlock(&mutex);
