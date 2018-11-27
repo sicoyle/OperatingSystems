@@ -198,7 +198,7 @@ int main() {
 	printf("------------------------Optimal Solution-----------------------\n");
 	OptimalSolution(a, MAX, NumberOfFrames);
 
-	printf("Checopt out how LRU differs from Optimal!\n");	
+	printf("Check out how LRU differs from Optimal!\n");	
 	
 	return 0;
 }
