@@ -35,7 +35,7 @@ void LRUSolution(int arr[], int size, int NumberOfFrames) {
 	//Variables
 	bool page[PAGES] = {false};
 	int pageFaults = 0;
-	int i = 0;
+	int i;
 	int index = 0;
 	int frame[NumberOfFrames];
 	int counter;
@@ -44,12 +44,12 @@ void LRUSolution(int arr[], int size, int NumberOfFrames) {
 	int lru;
 
 	//For every page number in the reference string
-	for(i; i < size; i++) {
+	for(i = 0; i < size; i++) {
 		//check if valid frame open and current page not present	
 		if((index < NumberOfFrames) && (!page[arr[i]])){
 			//Put page number in frame and mark value as true
-			page[arr[i]] = true;
 			frame[index++] = arr[i];
+			page[arr[i]] = true;
 
 			//Increment page fault
 			pageFaults++;
@@ -91,8 +91,8 @@ void LRUSolution(int arr[], int size, int NumberOfFrames) {
 			}
 
 			//Put page number into frame
-			page[arr[i]] = true;
 			frame[opt] = arr[i];
+			page[arr[i]] = true;
 		}
 
 		//Display the contents of the frames
@@ -120,18 +120,18 @@ void OptimalSolution(int arr[], int size, int NumberOfFrames) {
 	for(i = 0; i < size; i++) {
 		//Check if there is a valid frame and the current page is not present
 		if((index < NumberOfFrames) && (!page[arr[i]])) {
-			page[arr[i]] = true;
 			frame[index++] = arr[i];
+			page[arr[i]] = true;
 
 			//Increment page fault
 			pageFaults++;
 		}
 
 		//Check if no valid frame and value not in page
-	        if((index >= NumberOfFrames) && (!page[arr[i]])) {
+		if((index >= NumberOfFrames) && (!page[arr[i]])) {
 			//Variables
-			bool visitedValue[PAGES] = {false};
 			counter = 0;
+			bool visitedValue[PAGES] = {false};
 
 			//Increment page fault
 			pageFaults++;
@@ -142,16 +142,17 @@ void OptimalSolution(int arr[], int size, int NumberOfFrames) {
 				if((counter == NumberOfFrames) || (p == size))
 					break;
 				
-				//If next page present and not a visited value
+				//If next page present and has a page value
 				if((page[arr[p]]) && (!visitedValue[arr[p]])) {
 					furthest = arr[p];
 					visitedValue[arr[p]] = true;
 					counter++;
 				}
+				
 			}
 
 			//Display page being replaced
-			printf("Number %d is being replaced.\n\n", furthest);
+			printf("Number %d is being replaced.\n", furthest);
 			page[furthest] = false;
 
 			//Loop through frames 
@@ -160,12 +161,12 @@ void OptimalSolution(int arr[], int size, int NumberOfFrames) {
 					break;
 
 			//Put page number into frame
-			page[arr[i]] = true;
 			frame[opt] = arr[i];
+			page[arr[i]] = true;
 		}
 		
 		//Display current state
-		ShowFrames(frame,index);
+		ShowFrames(frame, index);
 	}
 	
 	//Display page faults/hits
@@ -186,7 +187,7 @@ int main() {
 	//	a[i]=rand()%PAGES;
 	//}
 	int a[MAX]=  { 2,3,5,1,5,5,4,4,3,5,1,1,2,3,2,2,1,3,3,2,2,5,3,4,3,3,2,2,4,1 };
-	
+      //int a[MAX] = { 4,2,3,1,4,1,2,3,5,2,3,3,1,5,4,2,1,3,2,2,4,3,5,1,3,4,3,1 };
 	printf("Here is the reference string: ");
 	ShowFrames(a, MAX);
 
