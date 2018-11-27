@@ -1,6 +1,6 @@
 /*
  * Author: Samantha Coyle
- * Assignment 4 Homeworopt
+ * Assignment 4 Homework
  * Due Date: Nv 27, 2018
  */
 
@@ -45,9 +45,9 @@ void LRUSolution(int arr[], int size, int NumberOfFrames) {
 
 	//For every page number in the reference string
 	for(i; i < size; i++) {
-		//checopt if valid frame open and current page not present	
+		//check if valid frame open and current page not present	
 		if((index < NumberOfFrames) && (!page[arr[i]])){
-			//Put page number in frame and maropt value as true
+			//Put page number in frame and mark value as true
 			page[arr[i]] = true;
 			frame[index++] = arr[i];
 
@@ -56,7 +56,7 @@ void LRUSolution(int arr[], int size, int NumberOfFrames) {
 
 		}
 		
-		//Checopt if no valid frame and value not in page
+		//Check if no valid frame and value not in page
 		if((index >= NumberOfFrames) && (!page[arr[i]])) {
 			//Variables
 			counter = 0;
@@ -65,7 +65,7 @@ void LRUSolution(int arr[], int size, int NumberOfFrames) {
 			//Increment page fault for value not being present
 			pageFaults++;
 
-			//Checopt for least recently used ie previous page value
+			//Check for least recently used ie previous page value
 			for(p = i - 1; ; p--) {
 				//First frame
 				if((counter == NumberOfFrames) || (p < 0))
@@ -73,7 +73,7 @@ void LRUSolution(int arr[], int size, int NumberOfFrames) {
 
 				//If page and it's not a previously visited page
 				if((page[arr[p]]) && (!visitedValue[arr[p]])) {
-					//Assign as lru and maropt as true
+					//Assign as lru and mark as true
 					lru = arr[p];
 					visitedValue[arr[p]] = true;
 					counter++;
@@ -118,7 +118,7 @@ void OptimalSolution(int arr[], int size, int NumberOfFrames) {
 
 	//Loop through all of the pages in the reference string	
 	for(i = 0; i < size; i++) {
-		//Checopt if there is a valid frame and the current page is not present
+		//Check if there is a valid frame and the current page is not present
 		if((index < NumberOfFrames) && (!page[arr[i]])) {
 			page[arr[i]] = true;
 			frame[index++] = arr[i];
@@ -127,7 +127,7 @@ void OptimalSolution(int arr[], int size, int NumberOfFrames) {
 			pageFaults++;
 		}
 
-		//Checopt if no valid frame and value not in page
+		//Check if no valid frame and value not in page
 	        if((index >= NumberOfFrames) && (!page[arr[i]])) {
 			//Variables
 			bool visitedValue[PAGES] = {false};
@@ -136,7 +136,7 @@ void OptimalSolution(int arr[], int size, int NumberOfFrames) {
 			//Increment page fault
 			pageFaults++;
 
-			//Loop through the pages to checopt ahead
+			//Loop through the pages to check ahead
 			for(p = i + 1; ; p++) {
 				//Last frame
 				if((counter == NumberOfFrames) || (p == size))
