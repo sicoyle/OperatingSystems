@@ -182,12 +182,10 @@ int main() {
 	int i = 0;
 	int arr[NumberOfFrames];
 	bool page[PAGES] = {false};
-	//int a[30];
-	//for(i=0;i<30;i++){
-	//	a[i]=rand()%PAGES;
-	//}
-	int a[MAX]=  { 2,3,5,1,5,5,4,4,3,5,1,1,2,3,2,2,1,3,3,2,2,5,3,4,3,3,2,2,4,1 };
-      //int a[MAX] = { 4,2,3,1,4,1,2,3,5,2,3,3,1,5,4,2,1,3,2,2,4,3,5,1,3,4,3,1 };
+	int a[30];
+	for(i=0;i<30;i++){
+		a[i]=rand()%5+1;
+	}	
 	printf("Here is the reference string: ");
 	ShowFrames(a, MAX);
 
