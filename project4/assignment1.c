@@ -1,6 +1,6 @@
 /*
  * Author: Samantha Coyle
- * Assignment 4 Homework
+ * Assignment 4 Homeworopt
  * Due Date: Nv 27, 2018
  */
 
@@ -31,6 +31,78 @@ void ShowData(int faults) {
 	printf("\nNumber of page hits: %d\n\n", hits);
 }
 
+void LRUSolution(int arr[], int size, int NumberOfFrames) {
+	//Variables
+	bool page[PAGES] = {false};
+	int pageFaults = 0;
+	int i = 0;
+	int index = 0;
+	int frame[NumberOfFrames];
+	int counter;
+	int p;
+	int opt;
+	int lru;
+
+	//For every page number in the reference string
+	for(i; i < size; i++) {
+		//checopt if valid frame open and current page not present	
+		if((index < NumberOfFrames) && (!page[arr[i]])){
+			//Put page number in frame and maropt value as true
+			page[arr[i]] = true;
+			frame[index++] = arr[i];
+
+			//Increment page fault
+			pageFaults++;
+
+		}
+		
+		//Checopt if no valid frame and value not in page
+		if((index >= NumberOfFrames) && (!page[arr[i]])) {
+			//Variables
+			counter = 0;
+			bool visitedValue[PAGES] = {false};
+
+			//Increment page fault for value not being present
+			pageFaults++;
+
+			//Checopt for least recently used ie previous page value
+			for(p = i - 1; ; p--) {
+				//First frame
+				if((counter == NumberOfFrames) || (p < 0))
+					break;
+
+				//If page and it's not a previously visited page
+				if((page[arr[p]]) && (!visitedValue[arr[p]])) {
+					//Assign as lru and maropt as true
+					lru = arr[p];
+					visitedValue[arr[p]] = true;
+					counter++;
+				}
+			}
+
+			//Print page number being replaced
+			printf("Number %d is being replaced.\n\n", lru);
+			page[lru] = false;
+
+			//Loop through frames
+			for(opt = 0; opt < NumberOfFrames; opt++) {
+				if(frame[opt] == lru)
+					break;
+			}
+
+			//Put page number into frame
+			page[arr[i]] = true;
+			frame[opt] = arr[i];
+		}
+
+		//Display the contents of the frames
+		ShowFrames(frame, index);
+	}
+
+	//Calculate page faults and hits
+	ShowData(pageFaults);
+}
+
 //The most optimal solution for the page replacement algorithms
 void OptimalSolution(int arr[], int size, int NumberOfFrames) {
 	//Variables
@@ -40,98 +112,63 @@ void OptimalSolution(int arr[], int size, int NumberOfFrames) {
 	int index = 0;
 	int i;
 	int counter;
-	int j;
-	int k;
+	int p;
+	int opt;
 	int furthest;
 
-	//Loop through all of the pages	
+	//Loop through all of the pages in the reference string	
 	for(i = 0; i < size; i++) {
-		//Check if there is a valid frame and there are pages
+		//Checopt if there is a valid frame and the current page is not present
 		if((index < NumberOfFrames) && (!page[arr[i]])) {
-			pageFaults++;
-			frame[index++] = arr[i];
 			page[arr[i]] = true;
-		} else if((index >= NumberOfFrames) && (!page[arr[i]])) {
-			bool visited[PAGES] = {false};
+			frame[index++] = arr[i];
+
+			//Increment page fault
+			pageFaults++;
+		}
+
+		//Checopt if no valid frame and value not in page
+	        if((index >= NumberOfFrames) && (!page[arr[i]])) {
+			//Variables
+			bool visitedValue[PAGES] = {false};
 			counter = 0;
+
+			//Increment page fault
 			pageFaults++;
 
-			for(j = i + 1; ; j++) {
-				if((counter == NumberOfFrames) || (j == size))
+			//Loop through the pages to checopt ahead
+			for(p = i + 1; ; p++) {
+				//Last frame
+				if((counter == NumberOfFrames) || (p == size))
 					break;
-
-				if((page[arr[j]]) && (!visited[arr[j]])) {
-					furthest = arr[j];
-					visited[arr[j]] = true;
+				
+				//If next page present and not a visited value
+				if((page[arr[p]]) && (!visitedValue[arr[p]])) {
+					furthest = arr[p];
+					visitedValue[arr[p]] = true;
 					counter++;
 				}
 			}
 
+			//Display page being replaced
 			printf("Number %d is being replaced.\n\n", furthest);
 			page[furthest] = false;
 
-			for(k = 0; k < NumberOfFrames; k++)
-				if(frame[k] == furthest)
+			//Loop through frames 
+			for(opt = 0; opt < NumberOfFrames; opt++)
+				if(frame[opt] == furthest)
 					break;
 
-			frame[k] = arr[i];
+			//Put page number into frame
 			page[arr[i]] = true;
+			frame[opt] = arr[i];
 		}
 		
 		//Display current state
 		ShowFrames(frame,index);
 	}
 	
-	ShowData(pageFaults);
-}
-
-void LRUSolution(int arr[], int size, int NumberOfFrames) {
-	//Variables
-	bool page[PAGES] = {false};
-	int pageFaults = 0;
-	int i = 0;
-	int index = 0;
-	int frame[NumberOfFrames];
-	int counter;
-	int j;
-	int k;
-	int lru;
-
-	for(i; i < size; i++) {
-		if((index < NumberOfFrames) && (!page[arr[i]])){
-			pageFaults++;
-			frame[index++] = arr[i];
-			page[arr[i]] = true;
-		} else if((index >= NumberOfFrames) && (!page[arr[i]])) {
-			pageFaults++;
-			counter = 0;
-			bool visited[PAGES] = {false};
-
-			for(j = i - 1; ; j--) {
-				if((counter == NumberOfFrames) || (j < 0))
-					break;
-				if((page[arr[j]]) && (!visited[arr[j]])) {
-					lru = arr[j];
-					visited[arr[j]] = true;
-					counter++;
-				}
-			}
-
-			printf("Number %d is being replaced.\n\n", lru);
-			page[lru] = false;
-
-			for(k = 0; k < NumberOfFrames; k++) {
-				if(frame[k] == lru)
-					break;
-			}
-
-			frame[k] = arr[i];
-			page[arr[i]] = true;
-		}
-
-		ShowFrames(frame, index);
-	}
-
+	//Display page faults/hits
 	ShowData(pageFaults);
 }
 
@@ -161,7 +198,7 @@ int main() {
 	printf("------------------------Optimal Solution-----------------------\n");
 	OptimalSolution(a, MAX, NumberOfFrames);
 
-	printf("Check out how LRU differs from Optimal!\n");	
+	printf("Checopt out how LRU differs from Optimal!\n");	
 	
 	return 0;
 }
